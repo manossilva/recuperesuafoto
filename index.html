@@ -1,524 +1,165 @@
 <!DOCTYPE html>
-<html lang="pt-br" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
+    <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1177043587698539');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1177043587698539&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Thiago de Joaldo | Portal do Mandato</title>
-    
-    <!-- Bibliotecas de estilo e ícones (Não mexer aqui) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restauração de Fotos Família</title>
     <style>
-        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        
-        /* Efeito de vidro fosco (Glassmorphism) */
-        .glass {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        /* Estilos Globais Modernos e Limpos */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5; /* Fundo cinza bem claro, relaxante */
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
         }
 
-        .glass-dark {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Controle dos slides do carrossel */
-        .hero-slide {
-            opacity: 0;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            position: absolute;
-            inset: 0;
-        }
-
-        .hero-slide.active {
-            opacity: 1;
-            z-index: 10;
-        }
-
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Texto vazado (roxo) */
-        .text-stroke-sm {
-            -webkit-text-stroke: 1px #7000A4;
-            color: transparent;
-        }
-
-        /* Animação do pontinho verde do Modo TV */
-        @keyframes pulse-ring {
-            0% { transform: scale(0.33); opacity: 1; }
-            80%, 100% { opacity: 0; }
-        }
-
-        .status-dot::before {
-            content: '';
-            position: absolute;
+        /* Container Principal com a "Borda Única" elegante */
+        .cartao {
+            background-color: #ffffff;
             width: 100%;
-            height: 100%;
-            background: inherit;
-            border-radius: inherit;
-            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            max-width: 420px; /* Mais estreito para focar a atenção */
+            border: 4px solid #25D366; /* Borda grossa e verde (WhatsApp) */
+            border-radius: 20px; /* Cantos bem arredondados e amigáveis */
+            padding: 30px 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* Sombra suave para dar beleza */
+            box-sizing: border-box;
+            text-align: center;
         }
 
-        html { scroll-padding-top: 80px; }
+        /* Título Curto e Emocional */
+        h1 {
+            color: #1a1a1a;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        /* Subtítulo Objetivo */
+        .subtitulo {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        /* Lista de Informações (Ícone + Texto Curto) */
+        .info-lista {
+            text-align: left;
+            display: inline-block;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .icone {
+            font-size: 20px;
+            margin-right: 12px;
+            width: 25px;
+            text-align: center;
+        }
+
+        /* Botão WhatsApp Grande e Destacado */
+        .btn-whats {
+            display: block;
+            background-color: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 18px;
+            border-radius: 50px; /* Botão oval, mais moderno */
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .btn-whats:active {
+            transform: scale(0.97); /* Efeito de clique no celular */
+        }
+
+        /* Rodapé de Confiança Simplificado */
+        .seguranca {
+            font-size: 13px;
+            color: #888;
+            margin-top: 25px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .seguranca strong {
+            color: #555;
+        }
+        
+        a.insta-link {
+            color: #888;
+            text-decoration: underline;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 overflow-x-hidden selection:bg-purple-100">
+<body>
 
-    <!-- ==========================================
-         CABEÇALHO / MENU DE NAVEGAÇÃO
-         ========================================== -->
-    <nav class="fixed top-2 sm:top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-50 rounded-full glass shadow-xl transition-all duration-300">
-        <div class="px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between">
-            
-           <div class="flex items-center gap-2 cursor-pointer shrink-0" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-    <img 
-        src="https://hcdsbawdwzmlujxnxymf.supabase.co/storage/v1/object/public/Thiago%20de%20Joaldo/Logo%20anim.GIF" 
-        alt="Logo Thiago de Joaldo" 
-        class="h-8 sm:h-10 w-auto object-contain"
-    >
-</div>
-            <!-- Opções do Menu (Desktop) -->
-            <div class="hidden lg:flex items-center gap-6">
-                <a href="#home" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-[#7000A4] transition-colors">Destaques</a>
-                <a href="#cidades" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-[#7000A4] transition-colors">Cidades</a>
-                <a href="#fakenews" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-red-600 transition-colors flex items-center gap-1">
-                    <i data-lucide="shield-alert" class="w-3 h-3"></i> Fake News
-                </a>
-                <a href="#politica" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-colors flex items-center gap-1">
-                    <i data-lucide="zap" class="w-3 h-3"></i> Política
-                </a>
-                <a href="#contato" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-[#7000A4] transition-colors">Contato</a>
+    <div class="cartao">
+        <h1>Reviva suas Memórias</h1>
+        <p class="subtitulo">Restauramos suas fotos antigas e enviamos direto no seu celular.</p>
+        
+        <div class="info-lista">
+            <div class="info-item">
+                <span class="icone">📸</span>
+                <span>Restauração 100% Digital</span>
             </div>
-
-            <!-- Botão WhatsApp -->
-            <div class="flex items-center gap-2 sm:gap-4">
-                <button class="lg:hidden p-2 text-[#7000A4]" id="mobileMenuBtn">
-                    <i data-lucide="menu"></i>
-                </button>
-                <button class="hidden sm:block px-5 py-2 bg-[#7000A4] text-white rounded-full text-[10px] font-black uppercase hover:bg-purple-900 transition-all shadow-lg active:scale-95">
-                    WhatsApp
-                </button>
+            <div class="info-item">
+                <span class="icone">📱</span>
+                <span>Receba pelo WhatsApp</span>
+            </div>
+            <div class="info-item">
+                <span class="icone">🖨️</span>
+                <span>Arquivo pronto para imprimir (se quiser)</span>
+            </div>
+            <div class="info-item">
+                <span class="icone">💳</span>
+                <span>Pagamento facilitado via PIX</span>
             </div>
         </div>
-    </nav>
 
-    <!-- Menu Mobile (Aparece em celulares ao clicar no ícone) -->
-    <div id="mobileMenu" class="fixed inset-0 z-[60] bg-white hidden p-6 flex-col justify-center animate-in fade-in zoom-in duration-300">
-        <button id="closeMenuBtn" class="absolute top-6 right-6 p-3 bg-slate-100 rounded-full text-[#7000A4]">
-            <i data-lucide="x"></i>
-        </button>
-        <div class="flex flex-col gap-6 items-center text-center">
-            <a href="#home" class="mobile-link text-3xl font-black uppercase text-slate-900">Início</a>
-            <a href="#cidades" class="mobile-link text-3xl font-black uppercase text-slate-900">Cidades</a>
-            <a href="#fakenews" class="mobile-link text-3xl font-black uppercase text-red-600">Fake News</a>
-            <a href="#politica" class="mobile-link text-3xl font-black uppercase text-indigo-600">Bastidores</a>
-            <a href="#contato" class="mobile-link text-3xl font-black uppercase text-slate-900">Contato</a>
+        <a href="https://wa.me/5579998667714?text=Quero%20restaurar%20minha%20foto" class="btn-whats">
+            Quero Restaurar Minha Foto
+        </a>
+
+        <div class="seguranca">
+            <p style="margin: 0 0 5px 0;">🔒 <strong>Empresa Segura</strong></p>
+            <p style="margin: 0;">
+                CNPJ: 49.152.749/0001-43<br>
+                Instagram: <a href="https://instagram.com/ramoncmkt" target="_blank" class="insta-link">@ramoncmkt</a>
+            </p>
         </div>
     </div>
 
-    <!-- ==========================================
-         1. CARROSSEL DE DESTAQUES (Estilo Netflix)
-         ========================================== -->
-    <section id="home" class="pt-20 sm:pt-28 pb-8 sm:pb-12 px-2 sm:px-4 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto relative group">
-            <div id="carouselContainer" class="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] bg-slate-900 h-[65vh] sm:h-[75vh] min-h-[450px] shadow-2xl touch-pan-y">
-                
-                <!-- Aqui as fotos do carrossel são inseridas pelo código lá embaixo -->
-                <div id="slides" class="h-full"></div>
-
-                <!-- Caixa de Informações (Overlay) -->
-                <div class="absolute bottom-4 sm:bottom-10 left-4 sm:left-10 right-4 sm:right-10 z-20 flex flex-col md:flex-row md:items-end justify-between gap-4 pointer-events-none">
-                    <div id="infoBox" class="max-w-2xl pointer-events-auto glass-dark p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl transition-all duration-500">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="px-2 py-0.5 bg-[#F2E500] text-slate-900 text-[9px] font-black uppercase tracking-tighter rounded shadow-sm">
-                                Destaque
-                            </span>
-                            <span id="slideDate" class="text-white/60 text-[10px] font-bold uppercase tracking-widest tracking-tighter">--</span>
-                        </div>
-                        <h1 id="slideTitle" class="text-xl sm:text-3xl md:text-5xl font-black text-white mb-3 leading-tight">--</h1>
-                        <p id="slideDesc" class="text-white/70 text-xs sm:text-base mb-6 line-clamp-2 sm:line-clamp-3 font-medium">--</p>
-                        <button class="w-full sm:w-auto px-6 py-3 bg-white text-[#7000A4] rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-purple-50 transition-all flex items-center justify-center gap-2 shadow-xl active:scale-95">
-                            Ver Matéria <i data-lucide="chevron-right" class="w-3 h-3"></i>
-                        </button>
-                    </div>
-
-                    <!-- Indicadores (Pontinhos) -->
-                    <div class="flex items-center justify-between md:justify-end gap-6 pointer-events-auto">
-                        <div id="slideIndicators" class="flex gap-2"></div>
-                    </div>
-                </div>
-
-                <!-- Selo de Modo TV (Auto-play) -->
-                <div id="autoPlayBadge" class="absolute top-6 right-6 z-30 hidden items-center gap-2 px-3 py-1.5 bg-black/40 backdrop-blur-lg rounded-full border border-white/10 text-[9px] font-black text-white/80 tracking-widest uppercase">
-                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full status-dot relative"></div>
-                    REPRODUÇÃO AUTOMÁTICA
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FRASE DE IMPACTO -->
-    <section class="py-8 sm:py-16 px-4 max-w-4xl mx-auto">
-        <div class="bg-purple-50 border border-purple-100 rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-14 text-center shadow-inner relative overflow-hidden">
-            <h2 class="text-xl sm:text-3xl font-serif italic text-[#7000A4] leading-relaxed mb-8 relative z-10">
-                "Gerliano é gente boa"
-            </h2>
-            <div class="flex flex-col items-center gap-3">
-                <div class="w-12 h-12 rounded-full bg-[#7000A4] flex items-center justify-center text-white font-bold shadow-lg">TJ</div>
-                <p class="font-black text-slate-900 text-[10px] uppercase tracking-widest">Thiago de Joaldo</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         2. SEÇÃO DE CIDADES
-         ========================================== -->
-    <section id="cidades" class="py-16 sm:py-24 px-4 max-w-7xl mx-auto border-t border-slate-200 mt-8">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 sm:mb-16 gap-6">
-            <div>
-                <h3 class="text-3xl sm:text-5xl font-black text-slate-900 uppercase tracking-tighter mb-4 leading-none">Ações nas <br class="hidden sm:block"/><span class="text-[#7000A4] text-stroke-sm">Cidades</span></h3>
-                <div class="h-1.5 w-16 bg-[#F2E500] rounded-full"></div>
-            </div>
-            <!-- Filtros de cidades (Aracaju, Itabaiana, etc) -->
-            <div id="cityFilters" class="flex overflow-x-auto gap-2 pb-2 no-scrollbar max-w-full w-full md:w-auto -mx-4 px-4 md:mx-0 md:px-0"></div>
-        </div>
-
-        <!-- Grid de notícias das cidades -->
-        <div id="newsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10"></div>
-    </section>
-
-    <!-- ==========================================
-         3. SEÇÃO FAKE NEWS (NOVA ORDEM)
-         ========================================== -->
-    <section id="fakenews" class="py-16 sm:py-24 px-4 max-w-5xl mx-auto border-t border-slate-200">
-        <div class="text-center mb-12 sm:mb-20">
-            <div class="inline-flex p-5 bg-red-100 text-red-600 rounded-3xl mb-8 shadow-xl shadow-red-100 rotate-2">
-                <i data-lucide="shield-alert" class="w-10 h-10 sm:w-16 sm:h-16"></i>
-            </div>
-            <h2 class="text-3xl sm:text-6xl font-black text-slate-900 mb-4 uppercase tracking-tighter leading-none">Verdade <span class="text-red-600">Acima de Tudo</span></h2>
-            <p class="text-slate-500 text-sm sm:text-xl max-w-2xl mx-auto font-medium">
-                O combate direto à desinformação com provas irrefutáveis.
-            </p>
-        </div>
-
-        <!-- O conteúdo aqui é preenchido pelo JavaScript (fakeNewsData) -->
-        <div id="fakeNewsGrid" class="space-y-6 sm:space-y-12"></div>
-    </section>
-
-    <!-- ==========================================
-         4. SEÇÃO POLÍTICA / BASTIDORES
-         ========================================== -->
-    <section id="politica" class="py-16 sm:py-24 px-4 bg-slate-900 text-white overflow-hidden">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 sm:mb-20 gap-8">
-                <div class="text-left">
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-500 text-white rounded-full text-[9px] font-black uppercase tracking-widest mb-6 shadow-lg shadow-indigo-500/20">
-                        <i data-lucide="zap" class="w-3 h-3"></i> Bastidores
-                    </div>
-                    <h2 class="text-4xl sm:text-6xl font-black uppercase tracking-tighter leading-none mb-6">Política à <br class="hidden sm:block"/><span class="text-indigo-400">P(arte)</span></h2>
-                    <p class="text-slate-400 font-medium text-base sm:text-xl max-w-xl">
-                        A análise técnica e os bastidores reais do poder em Sergipe e Brasília.
-                    </p>
-                </div>
-            </div>
-
-            <!-- O conteúdo aqui é preenchido pelo JavaScript (politicaData) -->
-            <div id="politicaGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10"></div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         5. SEÇÃO DE CONTATO
-         ========================================== -->
-    <section id="contato" class="py-12 sm:py-24 px-2 sm:px-4 max-w-5xl mx-auto">
-        <div class="bg-gradient-to-br from-purple-800 to-indigo-950 rounded-[2.5rem] sm:rounded-[4rem] p-8 sm:p-20 text-white shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-            <div class="relative z-10 text-center">
-                <h2 class="text-3xl sm:text-5xl font-black mb-4 uppercase tracking-tighter leading-none">Fale com <span class="text-[#F2E500]"> Thiago</span></h2>
-                <p class="text-purple-200 text-xs sm:text-base font-medium max-w-md mx-auto mb-10">Dúvidas ou sugestões? Envie sua mensagem direta.</p>
-                
-                <form id="contactForm" class="space-y-4 sm:space-y-6 max-w-3xl mx-auto bg-white/5 backdrop-blur-xl p-6 sm:p-10 rounded-[2rem] border border-white/10">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Seu Nome" class="w-full p-4 bg-white/10 border border-white/10 rounded-2xl text-white placeholder:text-white/30 text-sm">
-                        <input type="tel" placeholder="Seu WhatsApp" class="w-full p-4 bg-white/10 border border-white/10 rounded-2xl text-white placeholder:text-white/30 text-sm">
-                    </div>
-                    <textarea placeholder="Como o mandato pode ajudar?" rows="3" class="w-full p-4 bg-white/10 border border-white/10 rounded-2xl text-white placeholder:text-white/30 text-sm"></textarea>
-                    <button type="submit" class="w-full py-4 bg-[#F2E500] text-purple-900 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-white transition-all shadow-xl active:scale-95">
-                        Enviar para Thiago
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- RODAPÉ -->
-    <footer class="py-12 bg-white border-t border-slate-100 text-center">
-        <p class="text-slate-400 text-[9px] font-black uppercase tracking-[0.3em]">Mandato Federal • Thiago de Joaldo • 2026 | Feito por @ramoncmkt</p>
-    </footer>
-
-    <!-- ==========================================
-         LÓGICA DO SITE (ONDE VOCÊ MUDA OS TEXTOS)
-         ========================================== -->
-    <script>
-        
-        /* COMO MUDAR AS INFORMAÇÕES:
-           Basta editar os textos entre aspas " " nos blocos abaixo.
-           Para imagens, coloque o link da foto onde está "https://..."
-        */
-
-        // 1. NOTÍCIAS DO CARROSSEL (LÁ NO TOPO)
-        const newsData = [
-            { 
-                id: 1, 
-                tag: "Destaque", 
-                title: "CNH Social: 3 Milhões de Reais Investidos", 
-                description: "O programa CNH Social garante a habilitação gratuita para quem mais precisa, gerando empregos e autonomia.", 
-                date: "02 Fev, 2026", 
-                image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop", 
-                city: "Geral" 
-            },
-            { 
-                id: 2, 
-                tag: "Obras", 
-                title: "Pavimentação avançam em Itabaiana", 
-                description: "Recursos garantem asfalto novo e drenagem para o bairro industrial, melhorando a vida de milhares.", 
-                date: "31 Jan, 2026", 
-                image: "https://images.unsplash.com/photo-1590486803833-ffc6f98629e7?q=80&w=1974&auto=format&fit=crop", 
-                city: "Itabaiana" 
-            },
-            { 
-                id: 3, 
-                tag: "Saúde", 
-                title: "Novos equipamentos em Lagarto", 
-                description: "Respiradores e camas articuladas entregues para fortalecer o SUS na região Centro-Sul.", 
-                date: "28 Jan, 2026", 
-                image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=2070&auto=format&fit=crop", 
-                city: "Lagarto" 
-            }
-        ];
-
-        // 2. FAKE NEWS (O QUE ESTÃO DIZENDO VS A VERDADE)
-        const fakeNewsData = [
-            { 
-                id: 1, 
-                boato: "Dizem que o deputado votou contra o piso salarial.", 
-                realidade: "FALSO. Thiago votou A FAVOR do piso e destinou emendas extras para os municípios pagarem o reajuste.", 
-                data: "01 Fev, 2026" 
-            },
-            { 
-                id: 2, 
-                boato: "Boatos sobre corte de verbas na educação básica.", 
-                realidade: "FALSO. O investimento na educação básica foi ampliado em 15% através de emendas lideradas pelo deputado.", 
-                data: "30 Jan, 2026" 
-            }
-        ];
-
-        // 3. POLÍTICA / BASTIDORES
-        const politicaData = [
-            { 
-                id: 1, 
-                category: "Estratégia", 
-                title: "Bloco Independente Ganha Força", 
-                content: "A união de parlamentares focados em pautas regionais promete destravar recursos históricos para Sergipe neste semestre.", 
-                impact: "Alto", 
-                date: "02 Fev, 2026" 
-            },
-            { 
-                id: 2, 
-                category: "Partidário", 
-                title: "Foco no Interior Sergipano", 
-                content: "O diretório estadual prioriza agora a capacitação de lideranças locais para gerir melhor as verbas federais recebidas.", 
-                impact: "Médio", 
-                date: "01 Fev, 2026" 
-            }
-        ];
-
-        // 4. NOMES DAS CIDADES PARA O FILTRO
-        const cities = ["Todas", "Aracaju", "Itabaiana", "Lagarto", "Estância", "Socorro"];
-
-        /* LÓGICA DO SISTEMA (Não mexer a menos que saiba programar)
-        */
-
-        let heroIndex = 0;
-        let isAutoPlaying = false;
-        let idleTimer, autoPlayInterval;
-        let touchStartX = 0;
-
-        // Inicializa o Carrossel
-        function initCarousel() {
-            const slidesContainer = document.getElementById('slides');
-            const indicatorsContainer = document.getElementById('slideIndicators');
-            newsData.forEach((n, i) => {
-                const slide = document.createElement('div');
-                slide.className = `hero-slide ${i === 0 ? 'active' : ''}`;
-                slide.innerHTML = `<img src="${n.image}" alt="${n.title}" class="w-full h-full object-cover">`;
-                slidesContainer.appendChild(slide);
-
-                const dot = document.createElement('div');
-                dot.className = `h-1 sm:h-1.5 transition-all duration-500 rounded-full cursor-pointer ${i === 0 ? 'w-6 sm:w-10 bg-[#F2E500]' : 'w-2 sm:w-3 bg-white/30'}`;
-                dot.onclick = () => goToSlide(i);
-                indicatorsContainer.appendChild(dot);
-            });
-            
-            // Suporte para deslizar o dedo (Swipe)
-            const container = document.getElementById('carouselContainer');
-            container.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-            container.addEventListener('touchend', e => {
-                const diff = touchStartX - e.changedTouches[0].screenX;
-                if (Math.abs(diff) > 50) diff > 0 ? nextSlide() : prevSlide();
-                resetIdle();
-            });
-
-            updateSlideInfo();
-        }
-
-        function updateSlideInfo() {
-            const data = newsData[heroIndex];
-            const titleEl = document.getElementById('slideTitle');
-            const descEl = document.getElementById('slideDesc');
-            
-            titleEl.textContent = data.title;
-            descEl.textContent = data.description;
-            document.getElementById('slideDate').textContent = data.date;
-
-            Array.from(document.getElementById('slides').children).forEach((s, i) => s.classList.toggle('active', i === heroIndex));
-            Array.from(document.getElementById('slideIndicators').children).forEach((d, i) => {
-                d.className = `h-1 sm:h-1.5 transition-all duration-500 rounded-full cursor-pointer ${i === heroIndex ? 'w-6 sm:w-10 bg-[#F2E500]' : 'w-2 sm:w-3 bg-white/30'}`;
-            });
-        }
-
-        function goToSlide(idx) { heroIndex = idx; updateSlideInfo(); resetIdle(); }
-        function nextSlide() { heroIndex = (heroIndex + 1) % newsData.length; updateSlideInfo(); }
-        function prevSlide() { heroIndex = (heroIndex - 1 + newsData.length) % newsData.length; updateSlideInfo(); }
-
-        function resetIdle() {
-            stopAutoPlay();
-            clearTimeout(idleTimer);
-            idleTimer = setTimeout(startAutoPlay, 30000); // 30 segundos
-        }
-
-        function startAutoPlay() {
-            isAutoPlaying = true;
-            document.getElementById('autoPlayBadge').classList.replace('hidden', 'flex');
-            autoPlayInterval = setInterval(nextSlide, 5000);
-        }
-
-        function stopAutoPlay() {
-            isAutoPlaying = false;
-            document.getElementById('autoPlayBadge').classList.replace('flex', 'hidden');
-            clearInterval(autoPlayInterval);
-        }
-
-        // Renderização dos filtros de cidades
-        let selectedCity = "Todas";
-        function renderCityFilters() {
-            const container = document.getElementById('cityFilters');
-            container.innerHTML = '';
-            cities.forEach(c => {
-                const btn = document.createElement('button');
-                const active = selectedCity === c;
-                btn.className = `px-5 py-2 sm:px-8 sm:py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all whitespace-nowrap border ${active ? 'bg-[#7000A4] text-white border-[#7000A4] shadow-lg -translate-y-1' : 'bg-white text-slate-400 border-slate-200'}`;
-                btn.textContent = c;
-                btn.onclick = () => { selectedCity = c; renderCityFilters(); renderNewsGrid(); };
-                container.appendChild(btn);
-            });
-        }
-
-        // Renderização das notícias
-        function renderNewsGrid() {
-            const container = document.getElementById('newsGrid');
-            container.innerHTML = '';
-            const filtered = selectedCity === "Todas" ? newsData : newsData.filter(n => n.city === selectedCity || n.city === "Geral");
-            filtered.forEach(n => {
-                const card = document.createElement('div');
-                card.className = "group bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-xl hover:shadow-2xl transition-all duration-500";
-                card.innerHTML = `
-                    <div class="relative aspect-[16/10] overflow-hidden">
-                        <img src="${n.image}" alt="${n.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute top-4 left-4 px-3 py-1 bg-white/95 backdrop-blur-md rounded-lg text-[9px] font-black text-purple-900 uppercase tracking-widest shadow">
-                            ${n.city}
-                        </div>
-                    </div>
-                    <div class="p-6 sm:p-8">
-                        <h4 class="text-lg sm:text-xl font-black text-slate-900 mb-3 group-hover:text-[#7000A4] transition-colors leading-snug">${n.title}</h4>
-                        <p class="text-slate-500 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-6">${n.description}</p>
-                        <div class="flex items-center gap-1 text-[#7000A4] font-black text-[9px] uppercase tracking-widest">
-                            Ler Matéria <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-            lucide.createIcons();
-        }
-
-        // Renderização de Política e Fake News
-        function renderContent() {
-            const polContainer = document.getElementById('politicaGrid');
-            politicaData.forEach(item => {
-                const div = document.createElement('div');
-                div.className = "group bg-white/5 rounded-3xl p-8 sm:p-10 border border-white/10 hover:bg-white/10 transition-all";
-                div.innerHTML = `
-                    <div class="flex items-center justify-between mb-6">
-                        <span class="px-3 py-1 bg-indigo-500 text-white text-[9px] font-black uppercase tracking-widest rounded-lg">${item.category}</span>
-                        <span class="text-[9px] font-black uppercase tracking-widest text-orange-400">Impacto ${item.impact}</span>
-                    </div>
-                    <h4 class="text-xl sm:text-2xl font-black text-white mb-4 leading-tight">${item.title}</h4>
-                    <p class="text-slate-400 text-sm sm:text-base mb-8 border-l-2 border-indigo-500/30 pl-4">${item.content}</p>
-                `;
-                polContainer.appendChild(div);
-            });
-
-            const fakeContainer = document.getElementById('fakeNewsGrid');
-            fakeNewsData.forEach(item => {
-                const div = document.createElement('div');
-                div.className = "bg-white rounded-[2rem] sm:rounded-[3rem] border border-slate-200 overflow-hidden shadow-2xl";
-                div.innerHTML = `
-                    <div class="flex flex-col lg:flex-row">
-                        <div class="flex-1 p-8 sm:p-12 bg-red-50/50 border-b lg:border-b-0 lg:border-r border-slate-100">
-                            <div class="flex items-center gap-2 text-red-600 font-black text-[9px] uppercase tracking-widest mb-4">
-                                <i data-lucide="x-circle" class="w-4 h-4"></i> O QUE DIZEM:
-                            </div>
-                            <p class="text-lg sm:text-xl font-bold text-slate-800 italic leading-snug">"${item.boato}"</p>
-                        </div>
-                        <div class="flex-[1.5] p-8 sm:p-12 bg-white relative">
-                            <div class="flex items-center gap-2 text-green-600 font-black text-[9px] uppercase tracking-widest mb-4">
-                                <i data-lucide="check-circle" class="w-4 h-4"></i> A VERDADE:
-                            </div>
-                            <p class="text-lg sm:text-2xl font-black text-slate-900 mb-6 leading-tight">${item.realidade}</p>
-                        </div>
-                    </div>
-                `;
-                fakeContainer.appendChild(div);
-            });
-        }
-
-        // Liga tudo ao carregar a página
-        window.addEventListener('load', () => {
-            initCarousel();
-            renderCityFilters();
-            renderNewsGrid();
-            renderContent();
-            lucide.createIcons();
-            resetIdle();
-        });
-
-        // Controles do menu mobile
-        const mMenu = document.getElementById('mobileMenu');
-        document.getElementById('mobileMenuBtn').onclick = () => mMenu.classList.replace('hidden', 'flex');
-        document.getElementById('closeMenuBtn').onclick = () => mMenu.classList.replace('flex', 'hidden');
-        document.querySelectorAll('.mobile-link').forEach(l => l.onclick = () => mMenu.classList.replace('flex', 'hidden'));
-
-        // Reinicia o tempo de inatividade se o usuário mexer no site
-        ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(e => window.addEventListener(e, resetIdle));
-    </script>
 </body>
 </html>
