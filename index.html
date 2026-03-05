@@ -1,165 +1,274 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1177043587698539');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1177043587698539&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1177043587698539');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1177043587698539&ev=PageView&noscript=1"
+    /></noscript>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restauração de Fotos Família</title>
+    <title>Restauração de Fotos • WhatsApp</title>
     <style>
-        /* Estilos Globais Modernos e Limpos */
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f0f2f5; /* Fundo cinza bem claro, relaxante */
-            margin: 0;
-            padding: 15px;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+            background: #ECE5DD;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: #333;
+            overflow: hidden;
         }
 
-        /* Container Principal com a "Borda Única" elegante */
-        .cartao {
-            background-color: #ffffff;
-            width: 100%;
-            max-width: 420px; /* Mais estreito para focar a atenção */
-            border: 4px solid #25D366; /* Borda grossa e verde (WhatsApp) */
-            border-radius: 20px; /* Cantos bem arredondados e amigáveis */
-            padding: 30px 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* Sombra suave para dar beleza */
-            box-sizing: border-box;
-            text-align: center;
-        }
-
-        /* Título Curto e Emocional */
-        h1 {
-            color: #1a1a1a;
-            font-size: 24px;
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        /* Subtítulo Objetivo */
-        .subtitulo {
-            font-size: 18px;
-            color: #555;
-            margin-bottom: 25px;
-            line-height: 1.4;
-        }
-
-        /* Lista de Informações (Ícone + Texto Curto) */
-        .info-lista {
-            text-align: left;
-            display: inline-block;
-            margin-bottom: 25px;
-            font-size: 16px;
-        }
-
-        .info-item {
+        /* WhatsApp-style top bar */
+        .wa-topbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: #075E54;
+            height: 56px;
             display: flex;
             align-items: center;
-            margin-bottom: 12px;
+            padding: 0 16px;
+            gap: 14px;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
         }
 
-        .icone {
-            font-size: 20px;
-            margin-right: 12px;
-            width: 25px;
-            text-align: center;
-        }
-
-        /* Botão WhatsApp Grande e Destacado */
-        .btn-whats {
-            display: block;
-            background-color: #25D366;
+        .wa-back {
             color: white;
-            text-decoration: none;
-            padding: 18px;
-            border-radius: 50px; /* Botão oval, mais moderno */
-            font-size: 18px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
-            transition: transform 0.2s ease;
+            font-size: 22px;
+            opacity: 0.9;
         }
 
-        .btn-whats:active {
-            transform: scale(0.97); /* Efeito de clique no celular */
+        .wa-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
         }
 
-        /* Rodapé de Confiança Simplificado */
-        .seguranca {
-            font-size: 13px;
-            color: #888;
-            margin-top: 25px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
+        .wa-info { flex: 1; }
+
+        .wa-name {
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.2;
         }
 
-        .seguranca strong {
-            color: #555;
+        .wa-status {
+            color: rgba(255,255,255,0.75);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
-        
-        a.insta-link {
-            color: #888;
-            text-decoration: underline;
+
+        .dot-online {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #25D366;
+            display: inline-block;
+            animation: pulse-dot 1s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Chat area */
+        .chat-area {
+            margin-top: 56px;
+            width: 100%;
+            max-width: 480px;
+            padding: 18px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: calc(100vh - 56px);
+        }
+
+        /* Message bubble */
+        .bubble {
+            background: white;
+            border-radius: 18px 18px 18px 4px;
+            padding: 12px 16px 8px;
+            max-width: 88%;
+            align-self: flex-start;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            position: relative;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+
+        .bubble:nth-child(1) { animation-delay: 0.1s; }
+        .bubble:nth-child(2) { animation-delay: 0.55s; }
+        .bubble:nth-child(3) { animation-delay: 1.05s; }
+        .bubble:nth-child(4) { animation-delay: 1.55s; }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.85) translateY(8px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .bubble-text {
+            font-size: 15px;
+            color: #1a1a1a;
+            line-height: 1.45;
+        }
+
+        .bubble-text strong {
+            color: #075E54;
+        }
+
+        .bubble-time {
+            font-size: 11px;
+            color: #aaa;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        /* Typing indicator bubble */
+        .typing-bubble {
+            background: white;
+            border-radius: 18px 18px 18px 4px;
+            padding: 12px 18px;
+            align-self: flex-start;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2.1s both;
+        }
+
+        .typing-bubble span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #aaa;
+            animation: bounce 1s infinite;
+        }
+        .typing-bubble span:nth-child(2) { animation-delay: 0.15s; }
+        .typing-bubble span:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+
+        /* Redirect notice */
+        .redirect-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: #075E54;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            animation: blink-bar 0.8s step-start infinite;
+        }
+
+        @keyframes blink-bar {
+            0%, 100% { background: #075E54; }
+            50% { background: #128C7E; }
+        }
+
+        .redirect-bar span {
+            animation: blink-text 0.8s step-start infinite;
+        }
+
+        @keyframes blink-text {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Progress bar */
+        .progress-wrap {
+            position: fixed;
+            top: 56px; left: 0; right: 0;
+            height: 3px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #25D366;
+            width: 0%;
+            animation: fill-bar 3s linear forwards;
+        }
+
+        @keyframes fill-bar {
+            from { width: 0%; }
+            to { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <div class="cartao">
-        <h1>Reviva suas Memórias</h1>
-        <p class="subtitulo">Restauramos suas fotos antigas e enviamos direto no seu celular.</p>
-        
-        <div class="info-lista">
-            <div class="info-item">
-                <span class="icone">📸</span>
-                <span>Restauração 100% Digital</span>
+    <!-- WhatsApp-style top bar -->
+    <div class="wa-topbar">
+        <div class="wa-back">←</div>
+        <div class="wa-avatar">📸</div>
+        <div class="wa-info">
+            <div class="wa-name">Restauração de Fotos</div>
+            <div class="wa-status">
+                <span class="dot-online"></span>
+                Conta Comercial Verificada
             </div>
-            <div class="info-item">
-                <span class="icone">📱</span>
-                <span>Receba pelo WhatsApp</span>
-            </div>
-            <div class="info-item">
-                <span class="icone">🖨️</span>
-                <span>Arquivo pronto para imprimir (se quiser)</span>
-            </div>
-            <div class="info-item">
-                <span class="icone">💳</span>
-                <span>Pagamento facilitado via PIX</span>
-            </div>
-        </div>
-
-        <a href="https://wa.me/5579998667714?text=Quero%20restaurar%20minha%20foto" class="btn-whats">
-            Quero Restaurar Minha Foto
-        </a>
-
-        <div class="seguranca">
-            <p style="margin: 0 0 5px 0;">🔒 <strong>Empresa Segura</strong></p>
-            <p style="margin: 0;">
-                CNPJ: 49.152.749/0001-43<br>
-                Instagram: <a href="https://instagram.com/ramoncmkt" target="_blank" class="insta-link">@ramoncmkt</a>
-            </p>
         </div>
     </div>
+
+    <!-- Progress bar -->
+    <div class="progress-wrap">
+        <div class="progress-fill"></div>
+    </div>
+
+    <!-- Chat area -->
+    <div class="chat-area">
+
+        <div class="bubble">
+            <div class="bubble-text">📲 Abrindo o WhatsApp para <strong>restaurar sua foto...</strong></div>
+            <div class="bubble-time">agora</div>
+        </div>
+
+        <div class="typing-bubble">
+            <span></span><span></span><span></span>
+        </div>
+
+    </div>
+
+    <!-- Bottom blinking redirect bar -->
+    <div class="redirect-bar">
+        <span>📲 Abrindo o WhatsApp agora...</span>
+    </div>
+
+    <script>
+        setTimeout(function() {
+            window.location.href = "https://wa.me/5579998667714?text=Quero%20restaurar%20minha%20foto";
+        }, 3000);
+    </script>
 
 </body>
 </html>
