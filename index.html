@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restauração de Fotos - Família</title>
+    
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -10,265 +14,185 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1177043587698539');
+    fbq('init', 'SEU_PIXEL_AQUI'); // COLOQUE SEU PIXEL AQUI
     fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1177043587698539&ev=PageView&noscript=1"
-    /></noscript>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restauração de Fotos • WhatsApp</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: 'Nunito', 'Segoe UI', sans-serif;
-            background: #ECE5DD;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
         }
-
-        /* WhatsApp-style top bar */
-        .wa-topbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: #075E54;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
-            gap: 14px;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        .container {
+            max-width: 480px; /* Foco total em Mobile */
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        .wa-back {
-            color: white;
-            font-size: 22px;
-            opacity: 0.9;
+        h1 {
+            font-size: 26px;
+            color: #b30000; /* Cor quente, emocional */
+            text-align: center;
+            line-height: 1.3;
         }
-
-        .wa-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #25D366;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
+        .subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
         }
-
-        .wa-info { flex: 1; }
-
-        .wa-name {
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .wa-status {
-            color: rgba(255,255,255,0.75);
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .dot-online {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #25D366;
-            display: inline-block;
-            animation: pulse-dot 1s infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        /* Chat area */
-        .chat-area {
-            margin-top: 56px;
-            width: 100%;
-            max-width: 480px;
-            padding: 18px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            min-height: calc(100vh - 56px);
-        }
-
-        /* Message bubble */
-        .bubble {
-            background: white;
-            border-radius: 18px 18px 18px 4px;
-            padding: 12px 16px 8px;
-            max-width: 88%;
-            align-self: flex-start;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        /* Container do Vídeo */
+        .video-wrapper {
             position: relative;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+            padding-bottom: 56.25%; /* Proporção 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 3px solid #ddd;
+            margin-bottom: 20px;
         }
-
-        .bubble:nth-child(1) { animation-delay: 0.1s; }
-        .bubble:nth-child(2) { animation-delay: 0.55s; }
-        .bubble:nth-child(3) { animation-delay: 1.05s; }
-        .bubble:nth-child(4) { animation-delay: 1.55s; }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.85) translateY(8px); }
-            to   { opacity: 1; transform: scale(1) translateY(0); }
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
-
-        .bubble-text {
-            font-size: 15px;
-            color: #1a1a1a;
-            line-height: 1.45;
-        }
-
-        .bubble-text strong {
-            color: #075E54;
-        }
-
-        .bubble-time {
-            font-size: 11px;
-            color: #aaa;
-            text-align: right;
-            margin-top: 4px;
-        }
-
-        /* Typing indicator bubble */
-        .typing-bubble {
-            background: white;
-            border-radius: 18px 18px 18px 4px;
-            padding: 12px 18px;
-            align-self: flex-start;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-            display: flex;
-            gap: 5px;
-            align-items: center;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 2.1s both;
-        }
-
-        .typing-bubble span {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #aaa;
-            animation: bounce 1s infinite;
-        }
-        .typing-bubble span:nth-child(2) { animation-delay: 0.15s; }
-        .typing-bubble span:nth-child(3) { animation-delay: 0.3s; }
-
-        @keyframes bounce {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
-        }
-
-        /* Redirect notice */
-        .redirect-bar {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: #075E54;
+        /* Botão WhatsApp */
+        .btn-whats {
+            display: block;
+            background-color: #25D366;
             color: white;
             text-align: center;
-            padding: 14px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            margin: 20px 0;
+            animation: pulsar 2s infinite;
+        }
+        @keyframes pulsar {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        /* Seção Antes e Depois */
+        .prova-social {
+            margin-top: 30px;
+            text-align: center;
+            border-top: 2px dashed #ccc;
+            padding-top: 20px;
+        }
+        .prova-social h2 {
+            font-size: 22px;
+            color: #333;
+        }
+        .foto-exemplo {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+        }
+        .passos {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .rodape {
+            text-align: center;
             font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            animation: blink-bar 0.8s step-start infinite;
-        }
-
-        @keyframes blink-bar {
-            0%, 100% { background: #075E54; }
-            50% { background: #128C7E; }
-        }
-
-        .redirect-bar span {
-            animation: blink-text 0.8s step-start infinite;
-        }
-
-        @keyframes blink-text {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        /* Progress bar */
-        .progress-wrap {
-            position: fixed;
-            top: 56px; left: 0; right: 0;
-            height: 3px;
-            background: rgba(255,255,255,0.2);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: #25D366;
-            width: 0%;
-            animation: fill-bar 3s linear forwards;
-        }
-
-        @keyframes fill-bar {
-            from { width: 0%; }
-            to { width: 100%; }
+            color: #777;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
 
-    <!-- WhatsApp-style top bar -->
-    <div class="wa-topbar">
-        <div class="wa-back">←</div>
-        <div class="wa-avatar">📸</div>
-        <div class="wa-info">
-            <div class="wa-name">Restauração de Fotos</div>
-            <div class="wa-status">
-                <span class="dot-online"></span>
-                Conta Comercial Verificada
-            </div>
-        </div>
+<div class="container">
+    <h1>Não deixe suas lembranças sumirem com o tempo!</h1>
+    <p class="subtitle">Veja no vídeo abaixo como eu recupero as fotos da sua família sem você sair de casa.</p>
+
+    <div class="video-wrapper">
+        <video id="vslVideo" controls controlsList="nodownload" poster="URL_DE_UMA_CAPA_AQUI.jpg">
+            <source src="URL_DO_SEU_VIDEO_NO_SUPABASE_AQUI.mp4" type="video/mp4">
+            Seu celular não suporta este vídeo.
+        </video>
     </div>
 
-    <!-- Progress bar -->
-    <div class="progress-wrap">
-        <div class="progress-fill"></div>
+    <a href="https://wa.me/5579998667714?text=Olá%20Ramon,%20quero%20restaurar%20uma%20foto!" class="btn-whats">
+        SIM, QUERO RESTAURAR MINHA FOTO
+    </a>
+
+    <div class="passos">
+        <strong>Como funciona? (É muito fácil)</strong><br><br>
+        1️⃣ Você tira uma foto da sua foto velha com o celular.<br>
+        2️⃣ Me envia pelo WhatsApp.<br>
+        3️⃣ Eu restauro no computador e te mando novinha no mesmo dia!
     </div>
 
-    <!-- Chat area -->
-    <div class="chat-area">
-
-        <div class="bubble">
-            <div class="bubble-text">📲 Abrindo o WhatsApp para <strong>restaurar sua foto...</strong></div>
-            <div class="bubble-time">agora</div>
-        </div>
-
-        <div class="typing-bubble">
-            <span></span><span></span><span></span>
-        </div>
-
+    <div class="prova-social">
+        <h2>Veja como fica o resultado:</h2>
+        <img src="URL_DA_SUA_IMAGEM_ANTES_E_DEPOIS_1.jpg" alt="Exemplo de Restauração 1" class="foto-exemplo">
+        <img src="URL_DA_SUA_IMAGEM_ANTES_E_DEPOIS_2.jpg" alt="Exemplo de Restauração 2" class="foto-exemplo">
     </div>
 
-    <!-- Bottom blinking redirect bar -->
-    <div class="redirect-bar">
-        <span>📲 Abrindo o WhatsApp agora...</span>
-    </div>
+    <a href="https://wa.me/5579998667714?text=Olá%20Ramon,%20quero%20restaurar%20uma%20foto!" class="btn-whats">
+        FALAR COM RAMON NO WHATSAPP
+    </a>
 
-    <script>
-        setTimeout(function() {
-            window.location.href = "https://wa.me/5579998667714?text=Quero%20restaurar%20minha%20foto";
-        }, 3000);
-    </script>
+    <div class="rodape">
+        <p>🔒 Site Seguro. CNPJ: 49.152.749/0001-43</p>
+        <p>Atendimento 100% Humano e Pessoal.</p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var video = document.getElementById("vslVideo");
+        var milestones = {
+            25: false,
+            50: false,
+            75: false,
+            90: false
+        };
+
+        video.addEventListener("timeupdate", function() {
+            var percent = (video.currentTime / video.duration) * 100;
+
+            // Dispara evento aos 25%
+            if (percent >= 25 && !milestones[25]) {
+                milestones[25] = true;
+                console.log("VSL_Visto_25");
+                if(typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_25');
+            }
+            // Dispara evento aos 50%
+            if (percent >= 50 && !milestones[50]) {
+                milestones[50] = true;
+                console.log("VSL_Visto_50");
+                if(typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_50');
+            }
+            // Dispara evento aos 75%
+            if (percent >= 75 && !milestones[75]) {
+                milestones[75] = true;
+                console.log("VSL_Visto_75");
+                if(typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_75');
+            }
+            // Dispara evento aos 90% (Considerado completo)
+            if (percent >= 90 && !milestones[90]) {
+                milestones[90] = true;
+                console.log("VSL_Visto_90_Completo");
+                if(typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_90_Completo');
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
