@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restauração de Fotos - Família</title>
 
-    <!-- Meta Pixel Code -->
+    <!-- ========== META PIXEL ========== -->
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -21,7 +21,7 @@
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1177043587698539&ev=PageView&noscript=1"
     /></noscript>
-    <!-- End Meta Pixel Code -->
+    <!-- ========== FIM META PIXEL ========== -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -55,7 +55,7 @@
             background: #fff;
         }
 
-        /* ===== HEADER LIMPO ===== */
+        /* ===== HEADER ===== */
         .header {
             background: linear-gradient(160deg, #3b2a1a 0%, #5c3d20 100%);
             padding: 32px 22px 28px;
@@ -68,10 +68,7 @@
             line-height: 1.25;
             font-weight: 900;
         }
-        .header h1 em {
-            font-style: normal;
-            color: var(--dourado-claro);
-        }
+        .header h1 em { font-style: normal; color: var(--dourado-claro); }
         .header-sub {
             color: rgba(255,255,255,0.72);
             font-size: 15px;
@@ -79,11 +76,11 @@
             line-height: 1.55;
         }
 
-        /* ===== CONTENT WRAPPER ===== */
+        /* ===== CONTENT ===== */
         .content { padding: 20px 18px; }
 
-        /* ===== VÍDEO VERTICAL (Reels / TikTok) ===== */
-        .video-label {
+        /* ===== LABEL DE SEÇÃO ===== */
+        .section-label {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -94,25 +91,25 @@
             letter-spacing: 1.2px;
             margin-bottom: 10px;
         }
-        .play-dot {
+        .label-dot {
             width: 22px; height: 22px;
             background: var(--dourado);
             color: #fff;
             border-radius: 50%;
             display: grid;
             place-items: center;
-            font-size: 9px;
+            font-size: 10px;
             flex-shrink: 0;
         }
 
-        /* Proporção 9:16 — vertical como Reels/TikTok, limitada para não encher a tela */
+        /* ===== VÍDEO VERTICAL 9:16 (TikTok / Reels) ===== */
         .video-outer {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
         }
         .video-wrapper {
-            width: min(260px, 58vw);   /* largura fixa compacta */
+            width: min(260px, 62vw);
             aspect-ratio: 9 / 16;
             border-radius: 16px;
             overflow: hidden;
@@ -193,7 +190,6 @@
             color: var(--texto-suave);
             margin-bottom: 22px;
         }
-
         .step-item {
             display: flex;
             align-items: flex-start;
@@ -201,7 +197,6 @@
             margin-bottom: 18px;
         }
         .step-item:last-child { margin-bottom: 0; }
-
         .step-icon-wrap {
             flex-shrink: 0;
             width: 52px; height: 52px;
@@ -212,7 +207,6 @@
             box-shadow: 0 4px 10px rgba(74,55,40,0.18);
         }
         .step-icon-wrap span { font-size: 26px; }
-
         .step-body { flex: 1; }
         .step-num {
             font-size: 11px;
@@ -233,7 +227,6 @@
             color: var(--texto-suave);
             line-height: 1.55;
         }
-
         .step-arrow {
             text-align: center;
             color: var(--dourado-claro);
@@ -242,7 +235,7 @@
             opacity: 0.7;
         }
 
-        /* ===== ANTES E DEPOIS ===== */
+        /* ===== CARROSSEL ANTES & DEPOIS ===== */
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 22px;
@@ -254,56 +247,101 @@
             text-align: center;
             color: #999;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
-        /* Foto 1:1 igual Instagram — independente do tamanho original */
-        .foto-wrapper {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            border-radius: 14px;
+
+        /* Carrossel externo */
+        .carousel-outer {
+            position: relative;
             overflow: hidden;
+            border-radius: 14px;
             border: 1px solid #e6ddd0;
             box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             background: #f0ebe3;
         }
-        .foto-exemplo {
+
+        /* Track deslizante */
+        .carousel-track {
+            display: flex;
+            transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+            will-change: transform;
+        }
+
+        /* Cada slide: dois quadrados lado a lado */
+        .carousel-slide {
+            min-width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3px;
+        }
+
+        .carousel-cell {
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #e8e0d4;
+            position: relative;
+        }
+        .carousel-cell img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
             display: block;
         }
-
-        /* ===== DEPOIMENTOS ===== */
-        .sessao-depoimentos {
-            background: var(--cinza-suave);
-            padding: 22px 16px;
-            border-radius: 18px;
-            margin: 6px 0;
+        /* Label ANTES / DEPOIS */
+        .carousel-cell .cell-label {
+            position: absolute;
+            bottom: 6px;
+            left: 6px;
+            background: rgba(0,0,0,0.52);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 20px;
         }
-        .dep-titulo {
-            font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            color: var(--texto);
+        /* Placeholder para quando não há foto "antes" */
+        .carousel-cell.placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #ede5d8;
+        }
+        .carousel-cell.placeholder span {
+            font-size: 28px;
+        }
+        .carousel-cell.placeholder p {
+            font-size: 11px;
+            color: var(--texto-suave);
+            font-weight: 700;
             text-align: center;
-            margin-bottom: 4px;
-        }
-        .dep-sub {
-            text-align: center;
-            font-size: 13px;
-            color: #999;
-            margin-bottom: 18px;
-        }
-        .print-whats {
-            width: 100%;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-            display: block;
+            padding: 0 8px;
         }
 
-        /* ===== BADGE IA (bottom) ===== */
+        /* Indicadores (bolinhas) */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+        .carousel-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #d4c4b0;
+            transition: background .3s, transform .3s;
+            cursor: pointer;
+        }
+        .carousel-dot.active {
+            background: var(--dourado);
+            transform: scale(1.3);
+        }
+
+        /* ===== BADGE IA ===== */
         .ia-badge {
             display: flex;
             align-items: center;
@@ -344,21 +382,31 @@
 
 <div class="container">
 
-    <!-- HEADER — pouco texto, direto ao ponto -->
     <div class="header">
         <h1>Devolva a <em>vida</em> às fotos<br>da sua família</h1>
-        <p class="header-sub">Veja abaixo o resultado real de uma restauração.</p>
+        <p class="header-sub">Assista ao vídeo e veja como funciona.</p>
     </div>
 
     <div class="content">
 
-        <!-- FOTO ANTES E DEPOIS NO TOPO (temporário) -->
-        <div class="video-label">
-            <div class="play-dot">✨</div>
-            Resultado real — Antes &amp; Depois
+        <!-- ===== VÍDEO TIK TOK / REELS ===== -->
+        <!-- INSTRUÇÃO: suba o vídeo e a capa no Supabase e cole as URLs abaixo -->
+        <div class="section-label">
+            <div class="label-dot">▶</div>
+            Assista agora
         </div>
-        <div class="foto-wrapper" style="margin-bottom: 20px;">
-            <img src="https://raoglzfmdxrynpwjmilp.supabase.co/storage/v1/object/public/FOTOS/ANTES%20(2)%20(1).png" alt="Antes e Depois destaque" class="foto-exemplo">
+
+        <div class="video-outer">
+            <div class="video-wrapper">
+                <video id="vslVideo"
+                    controls
+                    controlsList="nodownload"
+                    playsinline
+                    poster="URL_DA_CAPA_NO_SUPABASE.jpg">
+                    <source src="URL_DO_VIDEO_NO_SUPABASE.mp4" type="video/mp4">
+                    Seu celular não suporta este vídeo.
+                </video>
+            </div>
         </div>
 
         <!-- CTA 1 -->
@@ -367,7 +415,7 @@
             SIM! QUERO RESTAURAR MINHA FOTO
         </a>
 
-        <!-- PASSO A PASSO -->
+        <!-- ===== PASSO A PASSO ===== -->
         <div class="divisor">
             <div class="divisor-line"></div>
             <div class="divisor-text">Como funciona</div>
@@ -386,9 +434,7 @@
                     <div class="step-desc">Mande pelo WhatsApp — rasgada, desbotada ou danificada, não importa o estado.</div>
                 </div>
             </div>
-
             <div class="step-arrow">↓</div>
-
             <div class="step-item">
                 <div class="step-icon-wrap"><span>🎨</span></div>
                 <div class="step-body">
@@ -397,9 +443,7 @@
                     <div class="step-desc">Nossa equipe remove danos, restaura cores e recupera cada detalhe com precisão.</div>
                 </div>
             </div>
-
             <div class="step-arrow">↓</div>
-
             <div class="step-item">
                 <div class="step-icon-wrap"><span>🎁</span></div>
                 <div class="step-body">
@@ -416,7 +460,7 @@
             QUERO ESSE RESULTADO NA MINHA FOTO
         </a>
 
-        <!-- ANTES E DEPOIS -->
+        <!-- ===== CARROSSEL ANTES & DEPOIS ===== -->
         <div class="divisor">
             <div class="divisor-line"></div>
             <div class="divisor-text">Antes &amp; Depois</div>
@@ -424,14 +468,78 @@
         </div>
 
         <h2 class="section-title">Veja a mágica acontecer</h2>
-        <p class="section-sub">Resultados reais dos nossos últimos trabalhos</p>
+        <p class="section-sub">Deslize para ver mais resultados</p>
 
-        <div class="foto-wrapper"><img src="https://raoglzfmdxrynpwjmilp.supabase.co/storage/v1/object/public/FOTOS/Gemini_Generated_Image_cc6g7zcc6g7zcc6g%20(1)%20(1).png" alt="Restauração 1" class="foto-exemplo"></div>
-        <div class="foto-wrapper"><img src="https://raoglzfmdxrynpwjmilp.supabase.co/storage/v1/object/public/FOTOS/87e88008-3d44-4dda-9c33-ed96aad28a89%20(1).jpg" alt="Restauração 2" class="foto-exemplo"></div>
-        <div class="foto-wrapper"><img src="https://raoglzfmdxrynpwjmilp.supabase.co/storage/v1/object/public/FOTOS/Gemini_Generated_Image_3wf4jm3wf4jm3wf4%20(1).jpg" alt="Restauração 3" class="foto-exemplo"></div>
-        <div class="foto-wrapper"><img src="https://raoglzfmdxrynpwjmilp.supabase.co/storage/v1/object/public/FOTOS/Gemini_Generated_Image_tqsnrxtqsnrxtqsn%20(1)%20(1).png" alt="Restauração 4" class="foto-exemplo"></div>
+        <div class="carousel-outer">
+            <div class="carousel-track" id="carouselTrack">
 
-        <!-- BADGE IA — bem no final -->
+                <!--
+                  ESTRUTURA DE CADA SLIDE:
+                  Coluna esquerda = ANTES  (quando tiver a foto, troque .placeholder por img)
+                  Coluna direita  = DEPOIS (foto já restaurada)
+
+                  Para adicionar o ANTES no futuro, substitua o bloco .placeholder pelo:
+                  <div class="carousel-cell">
+                    <img src="URL_DA_FOTO_ANTES.jpg" alt="Antes">
+                    <span class="cell-label">Antes</span>
+                  </div>
+                -->
+
+                <!-- Slide 1 -->
+                <div class="carousel-slide">
+                    <div class="carousel-cell placeholder">
+                        <span>🕰️</span>
+                        <p>Em breve</p>
+                    </div>
+                    <div class="carousel-cell">
+                        <img src="https://raoglzfmdxrynpwjmilp.supabase.co/storage/v1/object/public/FOTOS/Gemini_Generated_Image_cc6g7zcc6g7zcc6g%20(1)%20(1).png" alt="Depois 1">
+                        <span class="cell-label">Depois</span>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-slide">
+                    <div class="carousel-cell placeholder">
+                        <span>🕰️</span>
+                        <p>Em breve</p>
+                    </div>
+                    <div class="carousel-cell">
+                        <img src="https://raoglzfmdxrynpwjmilp.supabase.co/storage/v1/object/public/FOTOS/87e88008-3d44-4dda-9c33-ed96aad28a89%20(1).jpg" alt="Depois 2">
+                        <span class="cell-label">Depois</span>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-slide">
+                    <div class="carousel-cell placeholder">
+                        <span>🕰️</span>
+                        <p>Em breve</p>
+                    </div>
+                    <div class="carousel-cell">
+                        <img src="https://raoglzfmdxrynpwjmilp.supabase.co/storage/v1/object/public/FOTOS/Gemini_Generated_Image_3wf4jm3wf4jm3wf4%20(1).jpg" alt="Depois 3">
+                        <span class="cell-label">Depois</span>
+                    </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="carousel-slide">
+                    <div class="carousel-cell placeholder">
+                        <span>🕰️</span>
+                        <p>Em breve</p>
+                    </div>
+                    <div class="carousel-cell">
+                        <img src="https://raoglzfmdxrynpwjmilp.supabase.co/storage/v1/object/public/FOTOS/Gemini_Generated_Image_tqsnrxtqsnrxtqsn%20(1)%20(1).png" alt="Depois 4">
+                        <span class="cell-label">Depois</span>
+                    </div>
+                </div>
+
+            </div><!-- /carousel-track -->
+        </div><!-- /carousel-outer -->
+
+        <!-- Bolinhas indicadoras -->
+        <div class="carousel-dots" id="carouselDots"></div>
+
+        <!-- BADGE IA -->
         <div class="ia-badge">
             <div class="ia-badge-icon">🤖</div>
             <div class="ia-badge-text">
@@ -450,116 +558,151 @@
             <strong>🔒 Atendimento 100% Seguro</strong><br>
             CNPJ: 49.152.749/0001-43
         </div>
-    </div>
-</div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var video = document.getElementById("vslVideo");
-        var milestones = { 25: false, 50: false, 75: false, 90: false };
+    </div><!-- /content -->
+</div><!-- /container -->
 
-        video.addEventListener("timeupdate", function() {
-            if (!video.duration) return;
-            var pct = (video.currentTime / video.duration) * 100;
-            if (pct >= 25 && !milestones[25]) { milestones[25] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_25'); }
-            if (pct >= 50 && !milestones[50]) { milestones[50] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_50'); }
-            if (pct >= 75 && !milestones[75]) { milestones[75] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_75'); }
-            if (pct >= 90 && !milestones[90]) { milestones[90] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_90'); }
-        });
-    });
-</script>
-<!-- ============================================================
-  RASTREIO ANALYTICS — cole este bloco no seu index.html
-  SUBSTITUA os valores de SUPABASE_URL e SUPABASE_ANON_KEY
-  Cole ANTES do </body>
-============================================================ -->
+<!-- ========================================================
+     ANALYTICS + PIXEL DO VÍDEO
+     INSTRUÇÃO: troque SUPABASE_URL e SUPABASE_KEY pela sua
+     chave "anon public" (Settings → API no Supabase)
+======================================================== -->
 <script>
 (function() {
 
-  // ── CONFIGURAÇÃO ─────────────────────────────────────────
-  var SUPABASE_URL  = 'https://raoglzfmdxrynpwjmilp.supabase.co';
-  var SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhb2dsemZtZHhyeW5wd2ptaWxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MjAwOTAsImV4cCI6MjA4ODM5NjA5MH0.IZT0LwVmtqC1vPpexF4nm81jnIQjiIWGwBTT4boKBpg';   // chave "anon public"
-  // ─────────────────────────────────────────────────────────
+    // ── CONFIGURAÇÃO ──────────────────────────────────────
+    var SUPABASE_URL = 'https://SEU_PROJETO.supabase.co';
+    var SUPABASE_KEY = 'SUA_ANON_KEY_AQUI';
+    // ─────────────────────────────────────────────────────
 
-  var REST = SUPABASE_URL + '/rest/v1';
-  var H    = { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
+    var REST      = SUPABASE_URL + '/rest/v1';
+    var HEADERS   = {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+    };
+    var SESSION_ID = 'sess_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    var startTime  = Date.now();
 
-  // Gera ID único por visita
-  var SESSION_ID = 'sess_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
-  var startTime  = Date.now();
+    function post(url, data) {
+        fetch(url, { method: 'POST', headers: HEADERS, body: JSON.stringify(data) }).catch(function(){});
+    }
 
-  // ── 1. REGISTRA SESSÃO ──────────────────────────────────
-  navigator.sendBeacon
-    ? sendBeacon(REST + '/sessions', {
+    // 1. Registra sessão
+    post(REST + '/sessions', {
         session_id: SESSION_ID,
         device:     /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
         referrer:   document.referrer || 'direto'
-      })
-    : post(REST + '/sessions', {
-        session_id: SESSION_ID,
-        device:     /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
-        referrer:   document.referrer || 'direto'
-      });
-
-  // ── 2. SAÍDA DA PÁGINA ─────────────────────────────────
-  function onExit() {
-    var seconds = Math.round((Date.now() - startTime) / 1000);
-    var payload = JSON.stringify({ session_id: SESSION_ID, time_on_page: seconds, exited_at: new Date().toISOString() });
-    navigator.sendBeacon(REST + '/sessions?session_id=eq.' + SESSION_ID,
-      new Blob([payload], { type: 'application/json' }));
-  }
-  document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') onExit(); });
-  window.addEventListener('beforeunload', onExit);
-
-  // ── 3. RASTREIO DO VÍDEO ───────────────────────────────
-  var video = document.getElementById('vslVideo');
-  if (video) {
-    var lastSecond    = -1;
-    var videoMilestones = { 25: false, 50: false, 75: false, 90: false };
-
-    // Progresso — envia a cada segundo novo assistido
-    video.addEventListener('timeupdate', function() {
-      if (!video.duration) return;
-      var s = Math.floor(video.currentTime);
-      if (s !== lastSecond) {
-        lastSecond = s;
-        post(REST + '/video_events', { session_id: SESSION_ID, second: s, event_type: 'progress' });
-
-        // Pixel do Facebook (mantido do código original)
-        var pct = (video.currentTime / video.duration) * 100;
-        if (pct >= 25 && !videoMilestones[25]) { videoMilestones[25] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_25'); }
-        if (pct >= 50 && !videoMilestones[50]) { videoMilestones[50] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_50'); }
-        if (pct >= 75 && !videoMilestones[75]) { videoMilestones[75] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_75'); }
-        if (pct >= 90 && !videoMilestones[90]) { videoMilestones[90] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_90'); }
-      }
     });
 
-    video.addEventListener('pause',  function() { post(REST + '/video_events', { session_id: SESSION_ID, second: Math.floor(video.currentTime), event_type: 'pause' }); });
-    video.addEventListener('play',   function() { post(REST + '/video_events', { session_id: SESSION_ID, second: Math.floor(video.currentTime), event_type: 'play' }); });
-    video.addEventListener('ended',  function() { post(REST + '/video_events', { session_id: SESSION_ID, second: Math.floor(video.duration  || 0), event_type: 'ended' }); });
-  }
+    // 2. Registra saída e tempo na página
+    function onExit() {
+        var seconds = Math.round((Date.now() - startTime) / 1000);
+        var payload = JSON.stringify({ session_id: SESSION_ID, time_on_page: seconds, exited_at: new Date().toISOString() });
+        navigator.sendBeacon
+            ? navigator.sendBeacon(REST + '/sessions?session_id=eq.' + SESSION_ID, new Blob([payload], { type: 'application/json' }))
+            : post(REST + '/sessions?session_id=eq.' + SESSION_ID, JSON.parse(payload));
+    }
+    document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') onExit(); });
+    window.addEventListener('beforeunload', onExit);
 
-  // ── 4. RASTREIO DE CLIQUES / TOQUES ───────────────────
-  document.addEventListener('click', function(e) {
-    var el       = e.target;
-    var xPct     = Math.round((e.clientX / window.innerWidth) * 100);
-    var yPct     = Math.round(((e.clientY + window.scrollY) / document.body.scrollHeight) * 100);
-    var elText   = (el.innerText || '').slice(0, 60).trim();
-    post(REST + '/click_events', {
-      session_id:   SESSION_ID,
-      x_pct:        xPct,
-      y_pct:        yPct,
-      element_tag:  el.tagName,
-      element_text: elText
+    // 3. Rastreio do vídeo (analytics + Pixel Facebook)
+    document.addEventListener('DOMContentLoaded', function() {
+        var video = document.getElementById('vslVideo');
+        if (!video) return;
+
+        var lastSecond = -1;
+        var pixelMilestones = { 25: false, 50: false, 75: false, 90: false };
+
+        video.addEventListener('timeupdate', function() {
+            if (!video.duration) return;
+            var s   = Math.floor(video.currentTime);
+            var pct = (video.currentTime / video.duration) * 100;
+
+            // Envia segundo ao Supabase
+            if (s !== lastSecond) {
+                lastSecond = s;
+                post(REST + '/video_events', { session_id: SESSION_ID, second: s, event_type: 'progress' });
+            }
+
+            // Marcos do Pixel do Facebook
+            if (pct >= 25 && !pixelMilestones[25]) { pixelMilestones[25] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_25'); }
+            if (pct >= 50 && !pixelMilestones[50]) { pixelMilestones[50] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_50'); }
+            if (pct >= 75 && !pixelMilestones[75]) { pixelMilestones[75] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_75'); }
+            if (pct >= 90 && !pixelMilestones[90]) { pixelMilestones[90] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_90'); }
+        });
+
+        video.addEventListener('pause', function() {
+            post(REST + '/video_events', { session_id: SESSION_ID, second: Math.floor(video.currentTime), event_type: 'pause' });
+        });
+        video.addEventListener('play', function() {
+            post(REST + '/video_events', { session_id: SESSION_ID, second: Math.floor(video.currentTime), event_type: 'play' });
+        });
+        video.addEventListener('ended', function() {
+            post(REST + '/video_events', { session_id: SESSION_ID, second: Math.floor(video.duration || 0), event_type: 'ended' });
+        });
     });
-  });
 
-  // ── HELPERS ────────────────────────────────────────────
-  function post(url, data) {
-    fetch(url, { method: 'POST', headers: H, body: JSON.stringify(data) }).catch(function(){});
-  }
+    // 4. Rastreio de cliques / toques
+    document.addEventListener('click', function(e) {
+        var el = e.target;
+        post(REST + '/click_events', {
+            session_id:   SESSION_ID,
+            x_pct:        Math.round((e.clientX / window.innerWidth) * 100),
+            y_pct:        Math.round(((e.clientY + window.scrollY) / document.body.scrollHeight) * 100),
+            element_tag:  el.tagName,
+            element_text: (el.innerText || '').slice(0, 60).trim()
+        });
+    });
 
 })();
 </script>
+
+<!-- ========================================================
+     CARROSSEL — passa sozinho a cada 3s, também aceita swipe
+======================================================== -->
+<script>
+(function() {
+    var track  = document.getElementById('carouselTrack');
+    var dotsEl = document.getElementById('carouselDots');
+    if (!track) return;
+
+    var slides = track.querySelectorAll('.carousel-slide');
+    var total  = slides.length;
+    var current = 0;
+    var timer;
+
+    // Cria bolinhas
+    for (var i = 0; i < total; i++) {
+        var d = document.createElement('div');
+        d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        d.setAttribute('data-i', i);
+        d.addEventListener('click', function() { goTo(+this.getAttribute('data-i')); });
+        dotsEl.appendChild(d);
+    }
+
+    function goTo(n) {
+        current = (n + total) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dotsEl.querySelectorAll('.carousel-dot').forEach(function(d, idx) {
+            d.classList.toggle('active', idx === current);
+        });
+        clearInterval(timer);
+        timer = setInterval(function() { goTo(current + 1); }, 3500);
+    }
+
+    // Auto-play
+    timer = setInterval(function() { goTo(current + 1); }, 3500);
+
+    // Suporte a swipe (mobile)
+    var startX = 0;
+    track.parentElement.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+    track.parentElement.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+})();
+</script>
+
 </body>
 </html>
