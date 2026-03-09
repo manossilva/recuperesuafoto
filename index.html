@@ -515,17 +515,12 @@
     </div>
 </div>
 
+
 <!-- ============================================================
-     ANALYTICS — Supabase
-     ✅ POST  → insere sessão, cliques, eventos de vídeo
-     ✅ PATCH → atualiza tempo na página ao sair
-     ✅ pagehide → mais confiável no mobile que beforeunload
-     ✅ capture=true → pega cliques dentro de SVG/path
-     ✅ Logs detalhados no console (F12 → Console)
+     ANALYTICS — rastreia sessão, cliques, vídeo, scroll e UTM
 ============================================================ -->
 <script>
 (function () {
-
     var SUPABASE_URL = 'https://raoglzfmdxrynpwjmilp.supabase.co';
     var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhb2dsemZtZHhyeW5wd2ptaWxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MjAwOTAsImV4cCI6MjA4ODM5NjA5MH0.IZT0LwVmtqC1vPpexF4nm81jnIQjiIWGwBTT4boKBpg';
 
@@ -537,33 +532,43 @@
     var startTime  = Date.now();
     var exitSent   = false;
 
+    /* ── helpers ── */
     function post(table, data) {
         fetch(REST + '/' + table, { method: 'POST', headers: H_POST, body: JSON.stringify(data) })
             .then(function (r) {
                 if (!r.ok) r.text().then(function (t) { console.warn('[Analytics] ❌ POST /' + table + ' ' + r.status, t); });
-                else        console.log('[Analytics] ✅ POST /' + table, data);
-            })
-            .catch(function (e) { console.warn('[Analytics] ❌ POST /' + table, e.message); });
+                else console.log('[Analytics] ✅ POST /' + table, data);
+            }).catch(function (e) { console.warn('[Analytics] ❌ POST /' + table, e.message); });
     }
-
     function patch(table, filter, data) {
         fetch(REST + '/' + table + '?' + filter, { method: 'PATCH', headers: H_PATCH, body: JSON.stringify(data) })
             .then(function (r) {
                 if (!r.ok) r.text().then(function (t) { console.warn('[Analytics] ❌ PATCH /' + table + ' ' + r.status, t); });
-                else        console.log('[Analytics] ✅ PATCH /' + table, data);
-            })
-            .catch(function (e) { console.warn('[Analytics] ❌ PATCH /' + table, e.message); });
+                else console.log('[Analytics] ✅ PATCH /' + table, data);
+            }).catch(function (e) { console.warn('[Analytics] ❌ PATCH /' + table, e.message); });
     }
 
-    /* ── 1. Registra sessão ── */
-    post('sessions', {
+    /* ── UTM — lê da URL e salva na sessão ── */
+    function getUTMs() {
+        var p = new URLSearchParams(window.location.search);
+        return {
+            utm_source   : p.get('utm_source')   || null,
+            utm_medium   : p.get('utm_medium')   || null,
+            utm_campaign : p.get('utm_campaign') || null,
+            utm_content  : p.get('utm_content')  || null,
+            utm_term     : p.get('utm_term')     || null
+        };
+    }
+
+    /* ── 1. Registra sessão com UTMs ── */
+    var utms = getUTMs();
+    post('sessions', Object.assign({
         session_id : SESSION_ID,
         device     : /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
         referrer   : document.referrer || 'direto'
-    });
+    }, utms));
 
-    /* ── 2. Saída — PATCH com tempo na página ──
-       REQUER política UPDATE no RLS (ver fix_rls.sql) */
+    /* ── 2. Saída ── */
     function onExit() {
         if (exitSent) return;
         exitSent = true;
@@ -575,7 +580,26 @@
     document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') onExit(); });
     window.addEventListener('pagehide', onExit);
 
-    /* ── 3. Cliques — sobe na árvore DOM para pegar texto real ── */
+    /* ── 3. Scroll depth — marcos 25 / 50 / 75 / 100% ── */
+    function bindScroll() {
+        var marks = { 25: false, 50: false, 75: false, 100: false };
+        function checkScroll() {
+            var scrolled = window.scrollY + window.innerHeight;
+            var total    = document.body.scrollHeight;
+            var pct      = Math.round((scrolled / total) * 100);
+            [25, 50, 75, 100].forEach(function (m) {
+                if (!marks[m] && pct >= m) {
+                    marks[m] = true;
+                    post('scroll_events', { session_id: SESSION_ID, scroll_pct: m });
+                    if (typeof fbq !== 'undefined') fbq('trackCustom', 'Scroll_' + m + 'pct');
+                }
+            });
+        }
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        checkScroll(); // verifica já no load (páginas curtas)
+    }
+
+    /* ── 4. Cliques ── */
     function bindClicks() {
         document.body.addEventListener('click', function (e) {
             var el = e.target;
@@ -594,11 +618,10 @@
         }, true);
     }
 
-    /* ── 4. Rastreio do vídeo + marcos Pixel Facebook ── */
+    /* ── 5. Vídeo + marcos Pixel ── */
     function bindVideo() {
         var video = document.getElementById('vslVideo');
         if (!video) return;
-
         var lastSecond = -1;
         var marks = { 25: false, 50: false, 75: false, 90: false };
 
@@ -606,32 +629,25 @@
             if (!video.duration) return;
             var s   = Math.floor(video.currentTime);
             var pct = (video.currentTime / video.duration) * 100;
-
-            if (s !== lastSecond) {
-                lastSecond = s;
-                post('video_events', { session_id: SESSION_ID, second: s, event_type: 'progress' });
-            }
-
+            if (s !== lastSecond) { lastSecond = s; post('video_events', { session_id: SESSION_ID, second: s, event_type: 'progress' }); }
             if (pct >= 25 && !marks[25]) { marks[25] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_25'); }
             if (pct >= 50 && !marks[50]) { marks[50] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_50'); }
             if (pct >= 75 && !marks[75]) { marks[75] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_75'); }
             if (pct >= 90 && !marks[90]) { marks[90] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_90'); }
         });
-
         video.addEventListener('pause',  function () { post('video_events', { session_id: SESSION_ID, second: Math.floor(video.currentTime),   event_type: 'pause' }); });
         video.addEventListener('play',   function () { post('video_events', { session_id: SESSION_ID, second: Math.floor(video.currentTime),   event_type: 'play'  }); });
         video.addEventListener('ended',  function () { post('video_events', { session_id: SESSION_ID, second: Math.floor(video.duration || 0), event_type: 'ended' }); });
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { bindClicks(); bindVideo(); });
+        document.addEventListener('DOMContentLoaded', function () { bindClicks(); bindVideo(); bindScroll(); });
     } else {
-        bindClicks(); bindVideo();
+        bindClicks(); bindVideo(); bindScroll();
     }
 
-    console.log('[Analytics] 🚀 Sessão iniciada:', SESSION_ID);
-    console.log('[Analytics] ℹ️ Abra o F12 → Console para ver os logs de rastreio em tempo real.');
-
+    console.log('[Analytics] 🚀 Sessão:', SESSION_ID);
+    if (utms.utm_source) console.log('[Analytics] 📣 Campanha:', utms.utm_campaign, '| Source:', utms.utm_source);
 }());
 </script>
 
