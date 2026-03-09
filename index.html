@@ -36,7 +36,6 @@
             --verde:         #25D366;
             --verde-escuro:  #1aab52;
             --creme:         #fefaf3;
-            --cinza-suave:   #f5f0e8;
             --texto:         #2a2018;
             --texto-suave:   #6b5744;
         }
@@ -233,7 +232,7 @@
             opacity: 0.7;
         }
 
-        /* ===== CARROSSEL ANTES & DEPOIS ===== */
+        /* ===== CARROSSEL ===== */
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 22px;
@@ -358,7 +357,7 @@
 
     <div class="content">
 
-        <!-- ===== VÍDEO TIK TOK / REELS ===== -->
+        <!-- ===== VÍDEO 9:16 ===== -->
         <div class="section-label">
             <div class="label-dot">▶</div>
             Assista agora
@@ -517,12 +516,12 @@
 </div>
 
 <!-- ============================================================
-     ANALYTICS — Supabase + Pixel Facebook
-     ✅ POST para inserir sessão, cliques e vídeo
-     ✅ PATCH para atualizar tempo na página (bug corrigido)
-     ✅ pagehide mais confiável que beforeunload no mobile
-     ✅ capture=true nos cliques — pega SVG e paths internos
-     ✅ Logs no console para depuração ([Analytics] ✅ / ❌)
+     ANALYTICS — Supabase
+     ✅ POST  → insere sessão, cliques, eventos de vídeo
+     ✅ PATCH → atualiza tempo na página ao sair
+     ✅ pagehide → mais confiável no mobile que beforeunload
+     ✅ capture=true → pega cliques dentro de SVG/path
+     ✅ Logs detalhados no console (F12 → Console)
 ============================================================ -->
 <script>
 (function () {
@@ -530,31 +529,30 @@
     var SUPABASE_URL = 'https://raoglzfmdxrynpwjmilp.supabase.co';
     var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhb2dsemZtZHhyeW5wd2ptaWxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MjAwOTAsImV4cCI6MjA4ODM5NjA5MH0.IZT0LwVmtqC1vPpexF4nm81jnIQjiIWGwBTT4boKBpg';
 
-    var REST     = SUPABASE_URL + '/rest/v1';
-    var H_POST   = { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
-    var H_PATCH  = { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'return=minimal' };
+    var REST    = SUPABASE_URL + '/rest/v1';
+    var H_POST  = { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
+    var H_PATCH = { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'return=minimal' };
 
     var SESSION_ID = 'sess_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
     var startTime  = Date.now();
     var exitSent   = false;
 
-    /* ── helpers ── */
     function post(table, data) {
         fetch(REST + '/' + table, { method: 'POST', headers: H_POST, body: JSON.stringify(data) })
             .then(function (r) {
-                if (!r.ok) r.text().then(function (t) { console.warn('[Analytics] ❌ POST ' + table + ' ' + r.status, t); });
-                else console.log('[Analytics] ✅ POST ' + table, data);
+                if (!r.ok) r.text().then(function (t) { console.warn('[Analytics] ❌ POST /' + table + ' ' + r.status, t); });
+                else        console.log('[Analytics] ✅ POST /' + table, data);
             })
-            .catch(function (e) { console.warn('[Analytics] ❌ POST ' + table, e.message); });
+            .catch(function (e) { console.warn('[Analytics] ❌ POST /' + table, e.message); });
     }
 
     function patch(table, filter, data) {
         fetch(REST + '/' + table + '?' + filter, { method: 'PATCH', headers: H_PATCH, body: JSON.stringify(data) })
             .then(function (r) {
-                if (!r.ok) r.text().then(function (t) { console.warn('[Analytics] ❌ PATCH ' + table + ' ' + r.status, t); });
-                else console.log('[Analytics] ✅ PATCH ' + table, data);
+                if (!r.ok) r.text().then(function (t) { console.warn('[Analytics] ❌ PATCH /' + table + ' ' + r.status, t); });
+                else        console.log('[Analytics] ✅ PATCH /' + table, data);
             })
-            .catch(function (e) { console.warn('[Analytics] ❌ PATCH ' + table, e.message); });
+            .catch(function (e) { console.warn('[Analytics] ❌ PATCH /' + table, e.message); });
     }
 
     /* ── 1. Registra sessão ── */
@@ -564,7 +562,8 @@
         referrer   : document.referrer || 'direto'
     });
 
-    /* ── 2. Saída — PATCH com tempo na página ── */
+    /* ── 2. Saída — PATCH com tempo na página ──
+       REQUER política UPDATE no RLS (ver fix_rls.sql) */
     function onExit() {
         if (exitSent) return;
         exitSent = true;
@@ -576,7 +575,7 @@
     document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') onExit(); });
     window.addEventListener('pagehide', onExit);
 
-    /* ── 3. Cliques — sobe na árvore para pegar texto real ── */
+    /* ── 3. Cliques — sobe na árvore DOM para pegar texto real ── */
     function bindClicks() {
         document.body.addEventListener('click', function (e) {
             var el = e.target;
@@ -592,10 +591,10 @@
                 element_tag  : el ? el.tagName : e.target.tagName,
                 element_text : (el && el.innerText ? el.innerText : '').replace(/\s+/g, ' ').slice(0, 80).trim()
             });
-        }, true); /* capture=true: pega cliques dentro de SVG, links, etc. */
+        }, true);
     }
 
-    /* ── 4. Rastreio do vídeo ── */
+    /* ── 4. Rastreio do vídeo + marcos Pixel Facebook ── */
     function bindVideo() {
         var video = document.getElementById('vslVideo');
         if (!video) return;
@@ -613,19 +612,17 @@
                 post('video_events', { session_id: SESSION_ID, second: s, event_type: 'progress' });
             }
 
-            /* Marcos Pixel Facebook */
             if (pct >= 25 && !marks[25]) { marks[25] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_25'); }
             if (pct >= 50 && !marks[50]) { marks[50] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_50'); }
             if (pct >= 75 && !marks[75]) { marks[75] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_75'); }
             if (pct >= 90 && !marks[90]) { marks[90] = true; if (typeof fbq !== 'undefined') fbq('trackCustom', 'VSL_Visto_90'); }
         });
 
-        video.addEventListener('pause',  function () { post('video_events', { session_id: SESSION_ID, second: Math.floor(video.currentTime),    event_type: 'pause' }); });
-        video.addEventListener('play',   function () { post('video_events', { session_id: SESSION_ID, second: Math.floor(video.currentTime),    event_type: 'play'  }); });
-        video.addEventListener('ended',  function () { post('video_events', { session_id: SESSION_ID, second: Math.floor(video.duration || 0),  event_type: 'ended' }); });
+        video.addEventListener('pause',  function () { post('video_events', { session_id: SESSION_ID, second: Math.floor(video.currentTime),   event_type: 'pause' }); });
+        video.addEventListener('play',   function () { post('video_events', { session_id: SESSION_ID, second: Math.floor(video.currentTime),   event_type: 'play'  }); });
+        video.addEventListener('ended',  function () { post('video_events', { session_id: SESSION_ID, second: Math.floor(video.duration || 0), event_type: 'ended' }); });
     }
 
-    /* Aguarda DOM se necessário */
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function () { bindClicks(); bindVideo(); });
     } else {
@@ -633,6 +630,7 @@
     }
 
     console.log('[Analytics] 🚀 Sessão iniciada:', SESSION_ID);
+    console.log('[Analytics] ℹ️ Abra o F12 → Console para ver os logs de rastreio em tempo real.');
 
 }());
 </script>
